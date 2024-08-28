@@ -1,22 +1,38 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 function Content() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(60);
 
-  useLayoutEffect(() => {
-    if (count > 3) {
-      setCount(0);
-    }
+  const timerId = useRef();
+  const prevCount = useRef();
+  const h1Ref = useRef();
+
+  useEffect(() => {
+    prevCount.current = count;
   }, [count]);
 
-  const handleRun = () => {
-    setCount(count + 1);
+  useEffect(() => {
+    const rect = h1Ref.current.getBoundingClientRect();
+    console.log(rect);
+  })
+
+  const handleStart = () => {
+    timerId.current = setInterval(() => {
+      setCount((count) => count - 1);
+    }, 1000);
   };
+
+  const handleStop = () => {
+    clearInterval(timerId.current);
+  };
+
+  console.log(count, prevCount.current);
 
   return (
     <div>
-      <h1>Count: {count}</h1>
-      <button onClick={handleRun}></button>
+      <h1 ref={h1Ref}>Count: {count}</h1>
+      <button onClick={handleStart}>Start</button>
+      <button onClick={handleStop}>Stop</button>
     </div>
   );
 }
