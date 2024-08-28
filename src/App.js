@@ -1,52 +1,30 @@
 import "./App.css";
-import { useState, memo, useCallback, useMemo, useRef } from "react";
-import Content from "./Content";
+import { useReducer } from "react";
+
+const initState = 0;
+const UP_ACTION = "Up";
+const DOWN_ACTION = "Down";
+
+const reducer = (state, action) => {
+  console.log("reducer", state, action);
+  switch (action) {
+    case UP_ACTION:
+      return state + 1;
+    case DOWN_ACTION:
+      return state - 1;
+    default:
+      throw new Error("Invalid action");
+  }
+};
 
 function App() {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [products, setProducts] = useState([]);
+  const [count, dispatch] = useReducer(reducer, initState);
 
-  const nameRef = useRef();
-
-  const handleSubmit = () => {
-    setProducts([...products, { name, price: +price }]);
-    setName("");
-    setPrice("");
-    nameRef.current.focus();
-  };
-
-  const total = useMemo(() => {
-    const result = products.reduce((result, product) => {
-      console.log("re-render");
-      return result + product.price;
-    }, 0);
-  }, []);
   return (
     <div className="App">
-      <input
-        ref={nameRef}
-        value={name}
-        placeholder="enter name..."
-        onChange={(e) => setName(e.target.value)}
-      />
-      <br />
-      <input
-        value={price}
-        placeholder="enter price..."
-        onChange={(e) => setPrice(e.target.value)}
-      />
-      <br />
-      <button onClick={handleSubmit}>Submit</button>
-      <br />
-      Total: {total}
-      <ul>
-        {products.map((product, index) => (
-          <li key={index}>
-            {product.name} - {product.price}
-          </li>
-        ))}
-      </ul>
+      <h1>{count}</h1>
+      <button onClick={() => dispatch(DOWN_ACTION)}>Down</button>
+      <button onClick={() => dispatch(UP_ACTION)}>Up</button>
     </div>
   );
 }
