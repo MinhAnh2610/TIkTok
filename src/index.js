@@ -1,8 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { ThemeProvider } from "./ThemeContext";
 
 // Fake comments
 function emitComment(id) {
@@ -11,18 +12,20 @@ function emitComment(id) {
       new CustomEvent(`lesson-${id}`, {
         detail: `Comment ${id}`,
       })
-    )
-  }, 2000)
+    );
+  }, 2000);
 }
 
-emitComment(1)
-emitComment(2)
-emitComment(3)
+emitComment(1);
+emitComment(2);
+emitComment(3);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

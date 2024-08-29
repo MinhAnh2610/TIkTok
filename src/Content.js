@@ -1,7 +1,8 @@
+import Paragraph from "./Paragraph";
 function Content() {
   return (
     <div>
-      Context 
+      <Paragraph />
     </div>
   );
 }
