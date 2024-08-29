@@ -1,13 +1,9 @@
-import { memo } from "react";
-
-function Content({ onIncrease }) {
-  console.log("re-render");
+function Content() {
   return (
     <div>
-      <h1>Hello Bruhs</h1>
-      <button onClick={onIncrease}>Click me😊</button>
+      Context 
     </div>
   );
 }
 
-export default memo(Content);
+export default Content;
